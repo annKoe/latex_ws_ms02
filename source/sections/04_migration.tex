@@ -1,9 +1,165 @@
 \section{"`Migration in 7 Schritten"'}
 
-\subsection{Subtitle}
+% ==================================================
+\subsection{Probleme/ Herausforderungen}
 
-Plain text.
+\begin{itemize}
+  \item welche Service deployed und wo laufen diese
+  \item \ldots
+  \item Konfiguration
+\end{itemize}
 
-\subsection{Another subtitle}
+% ==================================================
+\subsection{Challenge Nr. 1: "`Integration"'}
+\subsubsection{Integration a.k.a Kommunikation}
+mehrere Services - müssen miteinander kommunizieren
 
-More plain text.
+% --------------------------------------------------
+
+\subsubsection{Kommunikation via REST}
+restlet.com - HttpStatusCodes
+synchrone Kommunikation
+
+% --------------------------------------------------
+
+\subsubsection{Kommunikation via Messaging}
+\begin{itemize}
+  \item lose Kopplung durch Queues (Message kann nur von einem genommen werden
+  - ist dann raus) und Topics (Message kann von mehreren Consumern genommen
+  werden)
+  \item asynchrone Kommunikation
+  \item garantierte Auslieferung möglich
+\end{itemize}
+
+% --------------------------------------------------
+
+\subsubsection{UI Integration via Client/ Browser}
+
+\begin{itemize}
+  \item Hyperlinks (je eine Seite je Service)
+  \item Client Side Composition (Angular, Node)
+  \item iFrame ("`fake"' Document Component Model)
+  \item AJAX ("`blank"' Page)
+  \item JavaScript Voodoo (a.k.a "`SvenJa"')
+  \item HTML-Imports (Teil der WebComponents Spec) - Template-Mechanismus
+\end{itemize}
+
+% --------------------------------------------------
+
+\subsubsection{UI Integration via Server Side Include}
+Apache httpd, LiteSpeed, nginx, lighttpd, IIS
+
+\subsubsection{UI Integration via Edge Side Include}
+Proxy Caching Server (Varnish, Squid, Mongrel) - proprietäre Lösungen
+
+% --------------------------------------------------
+
+\subsubsection{UI Integration via UI/ API Gateway}
+Vorsicht:
+\begin{itemize}
+  \item Web UI/ API Monolith
+  \item Kein Platz für Logik
+\end{itemize}
+
+Single Point of Entry
+
+% --------------------------------------------------
+
+\subsubsection{Data Integration via gemeinsame Datenquelle}
+
+\begin{itemize}
+  \item keine unabhängige Entwicklung
+  \item nicht losgelöst
+  \item Änderungen betreffen mehrere Services
+\end{itemize}
+
+% --------------------------------------------------
+
+\subsubsection{Data Integration via getrennte Datenquelle}
+\begin{itemize}
+  \item lesend und schreibend via DataOwnerService
+  \item = sehr viel Kommunikation
+\end{itemize}
+
+% --------------------------------------------------
+
+\subsubsection{Data Integration via Replikation}
+\begin{itemize}
+  \item lesender Zugriff - auf eigene Datenbank
+  \item schreibender Zugriff via Messaging (DataOwnerService)
+  \item verteilte "`Transaktionen"' via Events
+  \item eventuell Konsistenze Daten
+\end{itemize}
+
+% ==================================================
+
+\subsection{Challenge Nr. 2: "`Discovery"'}
+
+\subsubsection{Herausforderungen}
+Service-Adressen werden dynamisch vergeben = Service Registry
+
+\paragraph{ClientSideDiscovery}
+Vorteil - Client kann für sich selber entscheiden, welcher Service verwendet
+wird
+
+\paragraph{ServerSideDiscovery}
+eine Art "`Router"' wird dazwischen geschalten
+
+
+\paragraph{LoadBalancing}
+\begin{itemize}
+  \item selbst implementiert
+  \item Tools nutzen (Ribbon, Feign)
+\end{itemize}
+
+% ==================================================
+
+\subsection{Challenge Nr. 3: "`Resilience"'}
+
+\begin{itemize}
+  \item Design for failure
+  \item fail sooner than later
+  \item meaningful response (fallback defaults)
+\end{itemize}
+
+\begin{itemize}
+  \item Load Balancing  
+  \item Retry on Failure (temporary)
+  \item Timeouts
+  \item Circuit Breaker
+  \item Bulk Heads - getrennte Threadpools (Hystrix)
+\end{itemize}
+
+% ==================================================
+
+\subsection{Challenge Nr. 4: "`Security"'}
+
+
+
+% ==================================================
+\subsection{Challenge Nr. 5: "`Monitoring"'}
+
+hängt eng mit Logging zusammen - muss zusammengeführt werden
+gemeinsamer Aufhänger wird benötigt - Correlation IDs
+
+
+
+% ==================================================
+
+\subsection{Tools}
+\subsubsection{Tools}
+
+\paragraph{Swarm}
+
+\paragraph{Postmann} 
+- Visualisierung der GET und POST-Aufrufe Ausgabe von Status-Codes, Headers usw.
+
+\paragraph{Consul} - Service Registry
+
+\paragraph{Ribbon} 
+
+\paragraph{Feign}
+
+\paragraph{MicroProfileIO}
+
+\paragraph{KEYCLOAK}

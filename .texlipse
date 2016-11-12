@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Sat Nov 05 12:05:30 CET 2016
+markTmpDer=true
+builderNum=2
+outputDir=document
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=pw_monolithen.tex
+outputFile=pw_monolithen.pdf
+langSpell=de
+markDer=true
+srcDir=source
